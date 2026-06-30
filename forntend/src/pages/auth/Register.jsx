@@ -8,6 +8,7 @@ import AuthLayout from '../../components/layout/AuthLayout';
 
 const schema = z.object({
   name: z.string().min(1, 'Nama wajib diisi'),
+  storeName: z.string().min(1, 'Nama toko wajib diisi'),
   email: z.string().min(1, 'Email wajib diisi').email('Format email tidak valid'),
   password: z.string().min(8, 'Password minimal 8 karakter'),
   confirmPassword: z.string().min(1, 'Konfirmasi password wajib diisi'),
@@ -62,6 +63,7 @@ export default function Register() {
       <h2 className="text-lg font-semibold text-[#111827] mb-6">Buat Akun Baru</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <Field id="name" label="Nama" registration={register('name')} error={errors.name?.message} placeholder="Nama lengkap" autoComplete="name" />
+        <Field id="storeName" label="Nama Toko" registration={register('storeName')} error={errors.storeName?.message} placeholder="Nama toko Anda" autoComplete="organization" />
         <Field id="email" label="Email" type="email" registration={register('email')} error={errors.email?.message} placeholder="email@contoh.com" autoComplete="email" />
         <Field id="password" label="Password" type="password" registration={register('password')} error={errors.password?.message} placeholder="Min. 8 karakter" autoComplete="new-password" />
         <Field id="confirmPassword" label="Konfirmasi Password" type="password" registration={register('confirmPassword')} error={errors.confirmPassword?.message} placeholder="Ulangi password" autoComplete="new-password" />
