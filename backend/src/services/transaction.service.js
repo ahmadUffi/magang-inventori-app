@@ -3,7 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const findAll = async (userId, query) => {
-  const { type, productId, search, sortField = "createdAt", sortDir = "desc" } = query;
+  const { type, productId, search, sortField = "createdAt", sortDir = "desc", page = 1, limit = 10 } = query;
   const where = { userId };
   if (type && ["IN", "OUT"].includes(type)) where.type = type;
   if (productId) where.productId = productId;
@@ -20,13 +20,21 @@ const findAll = async (userId, query) => {
   const orderField = allowedSort.includes(sortField) ? sortField : "createdAt";
   const orderDir = sortDir === "asc" ? "asc" : "desc";
 
-  return prisma.transaction.findMany({
-    where,
-    orderBy: { [orderField]: orderDir },
-    include: {
-      product: { select: { id: true, name: true, sku: true } },
-    },
-  });
+  const skip = (Number(page) - 1) * Number(limit);
+  const take = Number(limit);
+
+  const [transactions, total] = await Promise.all([
+    prisma.transaction.findMany({
+      where,
+      orderBy: { [orderField]: orderDir },
+      include: { product: { select: { id: true, name: true, sku: true } } },
+      skip,
+      take,
+    }),
+    prisma.transaction.count({ where }),
+  ]);
+
+  return { transactions, total };
 };
 
 const create = async (userId, { productId, type, quantity, note }) => {

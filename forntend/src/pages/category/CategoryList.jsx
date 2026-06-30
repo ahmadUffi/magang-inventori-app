@@ -29,7 +29,7 @@ export default function CategoryList() {
       const res = await categoryService.getAll({ page, limit, search, sortField, sortDir });
       const data = res?.data || res;
       setCategories(Array.isArray(data) ? data : data?.categories || data?.data || []);
-      setTotal(res?.total || res?.meta?.total || (Array.isArray(data) ? data.length : 0));
+      setTotal(data?.total || res?.total || 0);
     } catch {
       toast.error('Gagal memuat data kategori');
     } finally {

@@ -3,8 +3,8 @@ const { success } = require("../utils/response");
 
 const getAll = async (req, res, next) => {
   try {
-    const data = await transactionService.findAll(req.user.id, req.query);
-    return success(res, data, "Transactions retrieved");
+    const { transactions, total } = await transactionService.findAll(req.user.id, req.query);
+    return success(res, { transactions, total }, "Transactions retrieved");
   } catch (err) {
     next(err);
   }

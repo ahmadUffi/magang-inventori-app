@@ -50,7 +50,7 @@ export default function ProductList() {
       });
       const data = res?.data || res;
       setProducts(Array.isArray(data) ? data : data?.products || data?.data || []);
-      setTotal(res?.total || res?.meta?.total || (Array.isArray(data) ? data.length : 0));
+      setTotal(data?.total || res?.total || 0);
     } catch {
       toast.error('Gagal memuat data produk');
     } finally {

@@ -33,7 +33,7 @@ export default function TransactionList() {
       });
       const data = res?.data || res;
       setTransactions(Array.isArray(data) ? data : data?.transactions || data?.data || []);
-      setTotal(res?.total || res?.meta?.total || (Array.isArray(data) ? data.length : 0));
+      setTotal(data?.total || res?.total || 0);
     } catch {
       toast.error('Gagal memuat data transaksi');
     } finally {

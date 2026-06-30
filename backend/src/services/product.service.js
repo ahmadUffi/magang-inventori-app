@@ -3,7 +3,7 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
 const findAll = async (userId, query) => {
-  const { search, categoryId, sortField: sortBy = "createdAt", sortDir = "desc" } = query;
+  const { search, categoryId, sortField: sortBy = "createdAt", sortDir = "desc", page = 1, limit = 10 } = query;
 
   const where = { userId };
   if (search) {
@@ -18,11 +18,21 @@ const findAll = async (userId, query) => {
   const sortField = allowedSort.includes(sortBy) ? sortBy : "createdAt";
   const sortOrder = sortDir === "asc" ? "asc" : "desc";
 
-  return prisma.product.findMany({
-    where,
-    orderBy: { [sortField]: sortOrder },
-    include: { category: { select: { id: true, name: true } } },
-  });
+  const skip = (Number(page) - 1) * Number(limit);
+  const take = Number(limit);
+
+  const [products, total] = await Promise.all([
+    prisma.product.findMany({
+      where,
+      orderBy: { [sortField]: sortOrder },
+      include: { category: { select: { id: true, name: true } } },
+      skip,
+      take,
+    }),
+    prisma.product.count({ where }),
+  ]);
+
+  return { products, total };
 };
 
 const findById = async (id, userId) => {
