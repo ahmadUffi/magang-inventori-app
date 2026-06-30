@@ -10,7 +10,7 @@ export const authService = {
     return res.data;
   },
   async logout() {
-    try { await api.post('/auth/logout'); } catch (_) {}
+    // JWT stateless — no server-side session to invalidate, client clears token
   },
   async me() {
     const res = await api.get('/auth/me');
