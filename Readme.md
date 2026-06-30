@@ -87,7 +87,7 @@ Aplikasi web untuk mengelola inventori toko — mencatat produk, kategori, dan t
 
 ```bash
 git clone https://github.com/ahmadUffi/magang-inventori-app.git
-cd <nama-folder>
+cd  magang-inventori-app
 ```
 
 ### 2. Setup Backend
