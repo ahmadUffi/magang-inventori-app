@@ -72,7 +72,7 @@ export default function TransactionList() {
       ),
     },
     { key: 'quantity', label: 'Jumlah', sortable: true },
-    { key: 'notes', label: 'Catatan', render: (v) => v || '-' },
+    { key: 'note', label: 'Catatan', render: (v) => v || '-' },
     { key: 'createdAt', label: 'Tanggal', sortable: true, render: (v) => v ? formatDate(v) : '-' },
   ];
 
@@ -108,6 +108,15 @@ export default function TransactionList() {
         loading={loading}
         emptyTitle="Belum ada transaksi"
         emptyDesc="Tambahkan transaksi stok masuk atau keluar"
+        emptyAction={
+          <button
+            onClick={() => setModalOpen(true)}
+            className="mt-2 flex items-center gap-2 bg-[#2563EB] hover:bg-[#1D4ED8] text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+          >
+            <Plus size={16} />
+            Tambah Transaksi
+          </button>
+        }
         sortField={sortField}
         sortDir={sortDir}
         onSort={handleSort}
