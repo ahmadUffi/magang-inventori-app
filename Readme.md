@@ -1,6 +1,6 @@
 # Aplikasi Manajemen Inventori
 
-> **Posisi yang dilamar: Fullstack (Frontend + Backend)**
+> **Posisi yang dilamar: Frontend**
 
 Aplikasi web untuk mengelola inventori toko — mencatat produk, kategori, dan transaksi stok masuk/keluar. Dilengkapi dashboard ringkasan, pencarian, pengurutan, serta notifikasi stok menipis.
 
