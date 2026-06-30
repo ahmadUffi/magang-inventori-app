@@ -3,7 +3,7 @@ const { success } = require("../utils/response");
 
 const getAll = async (req, res, next) => {
   try {
-    const data = await categoryService.findAll(req.user.id);
+    const data = await categoryService.findAll(req.user.id, req.query);
     return success(res, data, "Categories retrieved");
   } catch (err) {
     next(err);

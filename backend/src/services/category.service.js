@@ -2,10 +2,21 @@ const { PrismaClient } = require("@prisma/client");
 
 const prisma = new PrismaClient();
 
-const findAll = async (userId) => {
+const findAll = async (userId, query = {}) => {
+  const { search, sortField = "createdAt", sortDir = "desc" } = query;
+
+  const where = { userId };
+  if (search) {
+    where.name = { contains: search };
+  }
+
+  const allowedSort = ["name", "createdAt"];
+  const orderField = allowedSort.includes(sortField) ? sortField : "createdAt";
+  const orderDir = sortDir === "asc" ? "asc" : "desc";
+
   return prisma.category.findMany({
-    where: { userId },
-    orderBy: { createdAt: "desc" },
+    where,
+    orderBy: { [orderField]: orderDir },
   });
 };
 
