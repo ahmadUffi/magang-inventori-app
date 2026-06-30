@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2563EB;
+  --color-primary-hover: #1D4ED8;
+  --color-success: #16A34A;
+  --color-danger: #DC2626;
+  --color-warning: #D97706;
+  --color-neutral-900: #111827;
+  --color-neutral-600: #4B5563;
+  --color-neutral-300: #D1D5DB;
+  --color-neutral-100: #F3F4F6;
+  --color-bg: #F9FAFB;
+  --color-surface: #FFFFFF;
+  --font-sans: Inter, system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #F9FAFB;
+  font-family: Inter, system-ui, sans-serif;
+  color: #111827;
+  font-size: 14px;
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.skeleton {
+  background: linear-gradient(90deg, #e5e7eb 25%, #f3f4f6 50%, #e5e7eb 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 4px;
+}
