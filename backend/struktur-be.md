@@ -86,17 +86,20 @@ src/
 │   ├── auth.controller.js
 │   ├── category.controller.js
 │   ├── product.controller.js
-│   └── transaction.controller.js
+│   ├── transaction.controller.js
+│   └── dashboard.controller.js
 ├── services/
 │   ├── auth.service.js
 │   ├── category.service.js
 │   ├── product.service.js
-│   └── transaction.service.js
+│   ├── transaction.service.js
+│   └── dashboard.service.js
 ├── routes/
 │   ├── auth.routes.js
 │   ├── category.routes.js
 │   ├── product.routes.js
 │   ├── transaction.routes.js
+│   ├── dashboard.routes.js
 │   └── index.js
 ├── middlewares/
 │   ├── auth.middleware.js          # verifikasi JWT, attach req.user
@@ -152,6 +155,22 @@ GET    /transactions          → Transaction History milik user (Filter by Type
 POST   /transactions           → Create Transaction (lihat flow stock update di bawah)
 ```
 > **Tidak ada** `PUT /transactions/:id` maupun `DELETE /transactions/:id` — sesuai keputusan FE bahwa transaksi tidak bisa diedit/dihapus.
+
+### Dashboard (Protected, scoped ke userId)
+```
+GET    /dashboard/stats       → Agregat statistik inventaris milik user yang login
+```
+Response `data`:
+```json
+{
+  "totalProducts": 42,
+  "totalCategories": 7,
+  "totalTransactions": 130,
+  "lowStockProducts": 3
+}
+```
+- `lowStockProducts`: jumlah product milik user dengan `stock <= 5` (threshold bisa dikonfigurasi via env `LOW_STOCK_THRESHOLD`, default 5).
+- Semua angka di-scope ke `userId` dari token — user lain tidak kelihatan.
 
 ## 6. Auth Middleware Flow
 ```

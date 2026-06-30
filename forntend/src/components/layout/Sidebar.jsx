@@ -1,11 +1,11 @@
-import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Package, Tag, ArrowLeftRight, X } from 'lucide-react';
+import { NavLink } from "react-router-dom";
+import { LayoutDashboard, Package, Tag, ArrowLeftRight, X } from "lucide-react";
 
 const navItems = [
-  { to: '/', label: 'Dashboard', icon: LayoutDashboard, exact: true },
-  { to: '/products', label: 'Produk', icon: Package },
-  { to: '/categories', label: 'Kategori', icon: Tag },
-  { to: '/transactions', label: 'Transaksi', icon: ArrowLeftRight },
+  { to: "/", label: "Dashboard", icon: LayoutDashboard, exact: true },
+  { to: "/products", label: "Produk", icon: Package },
+  { to: "/categories", label: "Kategori", icon: Tag },
+  { to: "/transactions", label: "Transaksi", icon: ArrowLeftRight },
 ];
 
 function NavItem({ to, label, icon: Icon, exact, onClick }) {
@@ -16,9 +16,10 @@ function NavItem({ to, label, icon: Icon, exact, onClick }) {
       onClick={onClick}
       className={({ isActive }) =>
         `flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors relative
-        ${isActive
-          ? 'bg-[#EFF6FF] text-[#2563EB] before:absolute before:left-0 before:top-1 before:bottom-1 before:w-[3px] before:bg-[#2563EB] before:rounded-r'
-          : 'text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#111827]'
+        ${
+          isActive
+            ? "bg-[#EFF6FF] text-[#2563EB] before:absolute before:left-0 before:top-1 before:bottom-1 before:w-[3px] before:rounded-r"
+            : "text-[#4B5563] hover:bg-[#F3F4F6] hover:text-[#111827]"
         }`
       }
     >
@@ -43,7 +44,7 @@ export default function Sidebar({ open, onClose }) {
       <aside
         className={`fixed top-0 left-0 h-full bg-white border-r border-[#D1D5DB] z-40 flex flex-col transition-transform duration-300
           lg:w-60 lg:translate-x-0 lg:top-16
-          w-70 ${open ? 'translate-x-0' : '-translate-x-full'}
+          w-70 ${open ? "translate-x-0" : "-translate-x-full"}
         `}
         style={{ width: open ? 280 : undefined }}
       >

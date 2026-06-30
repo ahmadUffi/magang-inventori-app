@@ -24,8 +24,9 @@ Jika ada konflik, `struktur-be.md` menang untuk hal-hal terkait auth & ownership
 3. **Modul Category** — CRUD paling sederhana, jadikan pola referensi untuk Controller → Service → Prisma yang scoped ke `req.user.id`.
 4. **Modul Product** — tambahkan Search, Filter, Sort di `GET /products`, plus validasi SKU unique (scoped per user) dan Category exists & milik user yang sama.
 5. **Modul Transaction** — implementasikan flow stock update di dalam `prisma.$transaction()` (insert Transaction + update Product.stock dalam satu atomic operation). Hanya `GET` dan `POST`, tidak ada `PUT`/`DELETE`.
-6. **Middleware umum** — Error Handler, Request Logger, Validation Middleware dipasang global di `app.js`, diterapkan konsisten di semua route.
-7. **Response format & error code** — pastikan semua endpoint (termasuk Auth) mengikuti format response sukses/error yang sama dari PRD asli (section "Response Format").
+6. **Modul Dashboard** — satu endpoint `GET /dashboard/stats` (protected), kembalikan 4 angka agregat: totalProducts, totalCategories, totalTransactions, lowStockProducts (semua scoped ke `req.user.id`). Threshold "stok menipis" ditentukan implementor (rekomendasi: stock <= 5).
+7. **Middleware umum** — Error Handler, Request Logger, Validation Middleware dipasang global di `app.js`, diterapkan konsisten di semua route.
+8. **Response format & error code** — pastikan semua endpoint (termasuk Auth & Dashboard) mengikuti format response sukses/error yang sama dari PRD asli (section "Response Format").
 
 ## 5. Pola Wajib di Setiap Service (Ownership Scoping)
 Setiap query Prisma untuk Category/Product/Transaction **wajib** menyertakan `where: { userId: req.user.id }` (langsung atau via composite where), termasuk untuk:
@@ -112,6 +113,7 @@ Semua keputusan bisnis & teknis untuk MVP sudah final per section 9 di atas. Lan
 - [ ] Business rule (SKU unique, category tidak bisa dihapus jika ada product, stock OUT tidak boleh minus) sudah diuji
 - [ ] Migration Prisma berjalan mulus dari kosong (`npx prisma migrate dev`) tanpa error
 - [ ] Tidak ada query Prisma yang lupa filter `userId` (audit ulang sebelum modul ditutup)
+- [ ] `GET /dashboard/stats` mengembalikan 4 field: `totalProducts`, `totalCategories`, `totalTransactions`, `lowStockProducts` — semua scoped ke user yang login
 
 ## 12. Komunikasi dengan User
 Sama seperti panduan FE: laporkan progres per modul, dan tandai eksplisit bila ada bagian yang diimplementasikan berdasarkan asumsi dari Open Questions section 9/10 di atas.
